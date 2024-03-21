@@ -1,0 +1,88 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model category {
+  id            Int             @id @default(autoincrement()) @db.SmallInt
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  title         String?
+  order         order[]
+  servicePerson servicePerson[]
+}
+
+model personPhotos {
+  id            Int            @id @default(autoincrement()) @db.SmallInt
+  created_at    DateTime       @default(now()) @db.Timestamptz(6)
+  url           String?
+  personId      Int?           @db.SmallInt
+  servicePerson servicePerson? @relation(fields: [personId], references: [id], onDelete: Cascade, map: "public_personPhotos_personId_fkey")
+}
+
+model review {
+  id              Int            @id @default(autoincrement()) @db.SmallInt
+  created_at      DateTime       @default(now()) @db.Timestamptz(6)
+  rating          Float?
+  servicePersonId Int?           @db.SmallInt
+  message         String?        @db.VarChar
+  userId          Int?           @db.SmallInt
+  servicePerson   servicePerson? @relation(fields: [servicePersonId], references: [id], onDelete: Cascade, map: "public_review_servicePersonId_fkey")
+  user            user?          @relation(fields: [userId], references: [id], onDelete: Cascade, map: "public_review_userId_fkey")
+}
+
+model servicePerson {
+  id             Int            @id @default(autoincrement()) @db.SmallInt
+  name           String?
+  price          Float?         @default(0)
+  imageUrl       String?
+  about          String?
+  location       String?
+  created_at     DateTime       @default(now()) @db.Timestamptz(6)
+  categoryId     Int?           @db.SmallInt
+  order          order[]
+  photos         personPhotos[]
+  reviewMessages review[]
+  category       category?      @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "public_servicePerson_categoryId_fkey")
+}
+
+model user {
+  id         Int      @id(map: "User_pkey") @default(autoincrement()) @db.SmallInt
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  first_name String?
+  last_name  String?
+  imageUrl   String?
+  email      String?
+  uuid       String?  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  review     review[]
+}
+
+model order {
+  id              Int             @id @default(autoincrement()) @db.SmallInt
+  created_at      DateTime        @default(now()) @db.Timestamptz(6)
+  date            String?
+  time            String?
+  location        String?
+  categoryId      Int?            @db.SmallInt
+  personId        Int?            @db.SmallInt
+  uuid            String?         @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  amount          Float?          @default(0)
+  status          String?         @default("'Pending'::text")
+  paymentIntentId String?
+  category        category?       @relation(fields: [categoryId], references: [id], onDelete: SetDefault, map: "public_order_categoryId_fkey")
+  servicePerson   servicePerson?  @relation(fields: [personId], references: [id], onDelete: SetDefault, map: "public_order_personId_fkey")
+  services        orderServices[]
+}
+
+model orderServices {
+  id         Int      @id @default(autoincrement()) @db.SmallInt
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  title      String?
+  quantity   Int?     @default(0) @db.SmallInt
+  orderId    Int?     @db.SmallInt
+  order      order?   @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "public_orderServices_orderId_fkey")
+}

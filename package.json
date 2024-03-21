@@ -9,19 +9,38 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.6",
+    "@stripe/react-stripe-js": "^2.5.1",
+    "@stripe/stripe-js": "^3.0.6",
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.39.8",
+    "date-fns": "^3.3.1",
+    "keen-slider": "^6.8.6",
+    "next": "14.1.0",
     "react": "^18",
+    "react-calendar": "^4.8.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18",
-    "next": "14.1.0"
+    "react-hook-form": "^7.51.1",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^5.0.1",
+    "stripe": "^14.19.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@prisma/client": "^5.11.0",
+    "@svgr/webpack": "^8.1.0",
+    "@types/google.maps": "^3.55.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.17",
+    "daisyui": "^4.7.2",
     "eslint": "^8",
-    "eslint-config-next": "14.1.0"
+    "eslint-config-next": "14.1.0",
+    "postcss": "^8.4.35",
+    "prettier": "^3.2.5",
+    "prisma": "^5.11.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }

@@ -1,0 +1,7 @@
+.rating .rating-stars input:first-child {
+  clip-path: polygon(0 0, 0 100%, 50% 100%, 50% 0);
+}
+.rating .rating-stars input:last-child {
+  @apply absolute;
+  clip-path: polygon(100% 0, 100% 100%, 50% 100%, 50% 0);
+}

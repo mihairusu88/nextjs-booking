@@ -1,0 +1,15 @@
+.empty-state .noData_svg__svg-icon-path-1 {
+  @apply fill-primary/20;
+}
+
+.empty-state .noData_svg__svg-icon-path-2 {
+  @apply fill-primary;
+}
+
+.empty-state .noData_svg__svg-icon-path-3 {
+  @apply fill-primary/60;
+}
+
+.empty-state .noData_svg__svg-icon-path-4 {
+  @apply fill-primary/60;
+}

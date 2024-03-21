@@ -1,0 +1,95 @@
+.service-card:nth-child(6n + 1) {
+  @apply bg-gradient-to-r from-primary/60 to-orange-500/60;
+}
+
+.service-card:nth-child(6n + 1) .overlay {
+  @apply bg-gradient-to-r from-primary/60 to-orange-500/60;
+}
+
+.service-card:nth-child(6n + 2) {
+  @apply bg-gradient-to-r from-orange-500/60 to-yellow-500/60;
+}
+
+.service-card:nth-child(6n + 2) .overlay {
+  @apply bg-gradient-to-r from-orange-500/60 to-yellow-500/60;
+}
+
+.service-card:nth-child(6n + 3) {
+  @apply bg-gradient-to-r from-indigo-500/60 to-cyan-500/60;
+}
+
+.service-card:nth-child(6n + 3) .overlay {
+  @apply bg-gradient-to-r from-indigo-500/60 to-cyan-500/60;
+}
+
+.service-card:nth-child(6n + 4) .overlay {
+  @apply bg-gradient-to-r from-emerald-500/60 to-blue-500/60;
+}
+
+.service-card:nth-child(6n + 4) {
+  @apply bg-gradient-to-r from-emerald-500/60 to-blue-500/60;
+}
+
+.service-card:nth-child(6n + 5) .overlay {
+  @apply bg-gradient-to-r from-yellow-500/60 to-orange-500/60;
+}
+
+.service-card:nth-child(6n + 5) {
+  @apply bg-gradient-to-r from-yellow-500/60 to-orange-500/60;
+}
+
+.service-card:nth-child(6n + 6) {
+  @apply bg-gradient-to-r from-sky-500/60 to-primary/60;
+}
+
+.service-card:nth-child(6n + 6) .overlay {
+  @apply bg-gradient-to-r from-sky-500/60 to-primary/60;
+}
+
+.service-card:nth-child(6n + 1) .service-card__icon-background {
+  @apply bg-primary;
+}
+
+.service-card:nth-child(6n + 1) .service-card__icon {
+  @apply text-primary;
+}
+
+.service-card:nth-child(6n + 2) .service-card__icon-background {
+  @apply bg-orange-500;
+}
+
+.service-card:nth-child(6n + 2) .service-card__icon {
+  @apply text-orange-500;
+}
+
+.service-card:nth-child(6n + 3) .service-card__icon-background {
+  @apply bg-indigo-500;
+}
+
+.service-card:nth-child(6n + 3) .service-card__icon {
+  @apply text-indigo-500;
+}
+
+.service-card:nth-child(6n + 4) .service-card__icon-background {
+  @apply bg-emerald-500;
+}
+
+.service-card:nth-child(6n + 4) .service-card__icon {
+  @apply text-emerald-500;
+}
+
+.service-card:nth-child(6n + 5) .service-card__icon-background {
+  @apply bg-yellow-500;
+}
+
+.service-card:nth-child(6n + 5) .service-card__icon {
+  @apply text-yellow-500;
+}
+
+.service-card:nth-child(6n + 6) .service-card__icon-background {
+  @apply bg-sky-500;
+}
+
+.service-card:nth-child(6n + 6) .service-card__icon {
+  @apply text-sky-500;
+}

@@ -1,0 +1,13 @@
+.calendar .react-calendar {
+  @apply !w-full rounded-badge !border-none !bg-primary/10 overflow-hidden;
+}
+.calendar .react-calendar__tile--now {
+  @apply bg-primary/20 text-primary hover:bg-primary/20;
+}
+.calendar .react-calendar__tile--active {
+  @apply !bg-primary text-white hover:!bg-primary;
+}
+
+.calendar .react-calendar__month-view__days__day--weekend:not(:disabled) {
+  @apply text-red-600;
+}
