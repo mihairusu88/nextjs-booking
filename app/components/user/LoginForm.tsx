@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useCallback, useTransition, useState, useEffect } from 'react';
-import { MdEmail } from 'react-icons/md';
-import { MdKey } from 'react-icons/md';
+import React, { useCallback, useTransition } from 'react';
+import { MdEmail, MdKey } from 'react-icons/md';
 import { LiaUserLockSolid } from 'react-icons/lia';
 import Link from 'next/link';
 import { login } from '@/app/lib/utils/authUtils';
@@ -13,8 +12,7 @@ import toast from 'react-hot-toast';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 interface LoginFormProps {
-  referer?: string | undefined | null;
-  origin?: string | undefined | null;
+  referer: string | undefined | null;
 }
 
 type Inputs = {
@@ -22,7 +20,7 @@ type Inputs = {
   password: string;
 };
 
-const LoginForm: React.FC<LoginFormProps> = ({ referer, origin }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ referer }) => {
   const [isPending, startTransition] = useTransition();
   const {
     register,
@@ -51,7 +49,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ referer, origin }) => {
 
     startTransition(async () => {
       toast.remove();
-      let response = (await login(data, referer ? referer : '/')) as any;
+      let response = (await login(data, referer ?? '/')) as any;
       response = JSON.parse(response);
 
       if (response.error) {
@@ -62,9 +60,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ referer, origin }) => {
 
   const submitWithOAuth = useCallback(
     async ({ provider }: { provider: Provider }) => {
-      await signInWithOAuth(provider, referer ? referer : '/', origin ? origin : '');
+      await signInWithOAuth(provider, referer ?? '/');
     },
-    [origin, referer],
+    [referer],
   );
 
   return (

@@ -13,7 +13,6 @@ export const metadata = {
 const Login = async () => {
   const headersList = headers();
   const referer = headersList.get('referer');
-  const origin = `${headersList.get('x-forwarded-proto')}://${headersList.get('host')}`;
 
   const user = await getUser();
 
@@ -23,7 +22,7 @@ const Login = async () => {
 
   return (
     <div className="login flex flex-col items-center justify-center w-full gap-4 py-8">
-      <LoginForm referer={referer} origin={origin} />
+      <LoginForm referer={referer} />
     </div>
   );
 };
