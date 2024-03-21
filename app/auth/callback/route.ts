@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {
-      if (next.includes(origin)) {
+      if (next.includes(process.env.NEXT_PUBLIC_HOST!)) {
         return NextResponse.redirect(next);
       }
 
