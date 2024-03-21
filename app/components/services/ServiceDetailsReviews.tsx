@@ -5,10 +5,10 @@ import { stars } from '@/app/lib/data';
 import { FaStar } from 'react-icons/fa';
 import ReviewCard from './ReviewCard';
 import EmptyState from '@/app/components/misc/EmptyState';
-import { review } from '@prisma/client';
+import { reviewExtended } from '@/app/lib/interfaces/service';
 
 interface ServiceDetailsReviewsProps {
-  reviews: review[];
+  reviews: reviewExtended[];
 }
 
 const ServiceDetailsReviews: React.FC<ServiceDetailsReviewsProps> = ({ reviews }) => {

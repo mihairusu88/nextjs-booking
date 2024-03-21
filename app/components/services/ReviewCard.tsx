@@ -20,7 +20,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
       <div className="flex items-center">
         <div className="avatar mr-4">
           <div className="w-10 rounded-full sm:w-14">
-            <Image src={review.user.imageUrl as string} alt="Avatar Logo" width={500} height={500} />
+            <Image src={review.user.imageUrl} alt="Avatar Logo" width={500} height={500} />
           </div>
         </div>
         <div className="text-base-100 text-sm font-semibold max-w-[150px] overflow-hidden text-ellipsis sm:text-md">
