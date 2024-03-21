@@ -16,7 +16,7 @@ const CleaningModalStep3 = () => {
 
   return (
     <div className="cleaning-modal-step-3 flex flex-col w-full gap-4">
-      <div className="flex w-full">
+      <div className="flex w-full relative z-10">
         <Map latitude={state.location.latitude} longitude={state.location.longitude} />
       </div>
       <p className="text-md text-base-100 font-semibold my-2">Adress Location</p>

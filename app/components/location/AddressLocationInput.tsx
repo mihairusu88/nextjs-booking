@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { getCurrentLocation } from '@/app/lib/utils/locationUtils';
 import { Loader } from '@googlemaps/js-api-loader';
+import { setAddressLocation, getAddressLocation } from '@/app/lib/utils/storageUtils';
 import logService from '@/app/lib/services/logService';
 
 interface AddressLocationInputProps {
@@ -54,15 +55,18 @@ const AddressLocationInput: React.FC<AddressLocationInputProps> = ({
     [getAddressSuggestions],
   );
 
-  const onChange = (e: React.FocusEvent<HTMLInputElement>) => {
-    const payload = {
-      value: e.target.value,
-      latitude: 0,
-      longitude: 0,
-    };
-    onChangeLocation(payload);
-    setAddressSuggestions(e.target.value);
-  };
+  const onChange = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      const payload = {
+        value: e.target.value,
+        latitude: 0,
+        longitude: 0,
+      };
+      onChangeLocation(payload);
+      setAddressSuggestions(e.target.value);
+    },
+    [onChangeLocation, setAddressSuggestions],
+  );
 
   const onFocus = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
@@ -71,16 +75,39 @@ const AddressLocationInput: React.FC<AddressLocationInputProps> = ({
     [setAddressSuggestions],
   );
 
-  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const onBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
     if (e.relatedTarget && e.relatedTarget.classList.contains('suggestions-item')) {
       e.preventDefault();
       return;
     }
 
     setSuggestions([]);
+  }, []);
+
+  const onClickSuggestionAddress = (address: Record<string, any>) => {
+    const { lat, lng } = address.geometry.location;
+
+    const payload = {
+      value: address.formatted_address,
+      latitude: lat(),
+      longitude: lng(),
+    };
+
+    onGetCurrentLocation(payload);
+    setSuggestions([]);
   };
 
-  const onClickMarkerButton = async () => {
+  const getAddressByCoordinates = useCallback(
+    async (position: google.maps.LatLng) => {
+      const { Geocoder } = await loader.importLibrary('geocoding');
+      const geocoder = new Geocoder();
+
+      return geocoder.geocode({ location: position });
+    },
+    [loader],
+  );
+
+  const onClickMarkerButton = useCallback(async () => {
     const locationResult = await getCurrentLocation();
     let address = '';
 
@@ -106,29 +133,18 @@ const AddressLocationInput: React.FC<AddressLocationInputProps> = ({
         longitude: locationResult.data.longitude,
       };
 
+      setAddressLocation(JSON.stringify(payload));
       onGetCurrentLocation(payload);
     }
-  };
+  }, [getAddressByCoordinates, onGetCurrentLocation]);
 
-  const onClickSuggestionAddress = (address: Record<string, any>) => {
-    const { lat, lng } = address.geometry.location;
-
-    const payload = {
-      value: address.formatted_address,
-      latitude: lat(),
-      longitude: lng(),
-    };
-
-    onGetCurrentLocation(payload);
-    setSuggestions([]);
-  };
-
-  const getAddressByCoordinates = async (position: google.maps.LatLng) => {
-    const { Geocoder } = await loader.importLibrary('geocoding');
-    const geocoder = new Geocoder();
-
-    return geocoder.geocode({ location: position });
-  };
+  useEffect(() => {
+    const location = getAddressLocation();
+    console.log('location', location);
+    if (location) {
+      onGetCurrentLocation(JSON.parse(location));
+    }
+  }, []);
 
   return (
     <label className="relative input input-bordered input-primary input-md w-full max-w-full flex items-center gap-2 rounded-badge">
@@ -145,7 +161,7 @@ const AddressLocationInput: React.FC<AddressLocationInputProps> = ({
         <FaMapMarkerAlt />
       </button>
       {suggestions.length > 0 && (
-        <div className="suggestions flex flex-col absolute bottom-[100%] mb-[5px] left-0 w-full bg-white p-2 gap-2 rounded-badge border-[1px] border-solid border-gray-300">
+        <div className="suggestions flex flex-col absolute z-20 bottom-[100%] mb-[5px] left-0 w-full bg-white p-2 gap-2 rounded-badge border-[1px] border-solid border-gray-300">
           {suggestions.map((suggestion: any) => (
             <button
               key={suggestion.place_id}

@@ -22,3 +22,13 @@ export const setOrderNonce = (orderUuid: string) => {
 
   return nonce;
 };
+
+export const setAddressLocation = (location: string = '') => {
+  localStorage.setItem(`${window.location.origin}_location`, location);
+
+  return location;
+};
+
+export const getAddressLocation = () => {
+  return localStorage.getItem(`${window.location.origin}_location`);
+};

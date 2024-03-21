@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   if (user) {
     userDetails = await prisma.user.findFirst({
       where: {
-        uuid: user?.id as string,
+        uuid: user?.id,
       },
     });
   }
